@@ -29,7 +29,7 @@ public class InputView {
             orderMap.put(menu, Integer.parseInt(real[1]));
         }
 
-        if (isDrinkOnly) throw new IllegalArgumentException("음료수만으로는 주문이 안됩니다");
+        if (isDrinkOnly) throw new IllegalArgumentException("[ERROR] 음료수만으로는 주문이 안됩니다");
 
         OutputView outputView = new OutputView();
         outputView.printMenu(orderMap);
