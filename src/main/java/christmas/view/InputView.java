@@ -14,7 +14,7 @@ public class InputView {
         return Integer.parseInt(input);
     }
 
-    public void readMenuAndCount() {
+    public Map<Menu, Integer> readMenuAndCount() {
         boolean isDrinkOnly = true;
         System.out.println("주문하실 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
         String input = Console.readLine();
@@ -31,8 +31,7 @@ public class InputView {
 
         if (isDrinkOnly) throw new IllegalArgumentException("[ERROR] 음료수만으로는 주문이 안됩니다");
 
-        OutputView outputView = new OutputView();
-        outputView.printMenu(orderMap);
+        return orderMap;
 
     }
 

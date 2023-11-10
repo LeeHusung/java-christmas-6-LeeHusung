@@ -1,6 +1,10 @@
 package christmas.controller;
 
+import christmas.model.Menu;
 import christmas.view.InputView;
+import christmas.view.OutputView;
+
+import java.util.Map;
 
 public class Controller {
 
@@ -10,6 +14,9 @@ public class Controller {
         int expectedVisitDate = inputView.readDate();
 
         System.out.println("12월 " + expectedVisitDate + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
-        inputView.readMenuAndCount();
+        Map<Menu, Integer> readMenuAndCount = inputView.readMenuAndCount();
+        OutputView outputView = new OutputView();
+        outputView.printMenu(readMenuAndCount);
+        outputView.printTotalPriceBeforeDiscount(readMenuAndCount);
     }
 }

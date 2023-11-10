@@ -26,5 +26,12 @@ public enum Menu {
         return this.category.startsWith("DRINK");
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public int getPrice() {
+        return price;
+    }
 }
 
