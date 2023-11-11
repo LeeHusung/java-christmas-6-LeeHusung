@@ -9,7 +9,7 @@ public enum Menu {
     해산물파스타("MAIN", 35000),
     크리스마스파스타("MAIN", 25000),
     초코케이크("DESSERT", 15000),
-    아이스크릠("DESSERT", 5000),
+    아이스크림("DESSERT", 5000),
     제로콜라("DRINK", 3000),
     레드와인("DRINK", 60000),
     샴페인("DRINK", 25000);
@@ -24,6 +24,14 @@ public enum Menu {
 
     public boolean isDrink() {
         return this.category.startsWith("DRINK");
+    }
+
+    public boolean isMain() {
+        return this.category.startsWith("MAIN");
+    }
+
+    public boolean isDessert() {
+        return this.category.startsWith("DESSERT");
     }
 
     public String getCategory() {
