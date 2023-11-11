@@ -2,15 +2,15 @@ package christmas.discount;
 
 import christmas.model.Menu;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public interface DiscountPolicy {
 
-    int discount(int expectedVisitDate, Map<Menu, Integer> menuAndCount);
+    Set<Integer> weekdays = new HashSet<>();
+    Set<Integer> weekends = new HashSet<>();
+    Set<Integer> specialDays = new HashSet<>();
 
-    //할인
-//    public void discount100PlusEverydayUntil25();
-//    public void discountWeekdays();
-//    public void discountWeekend();
-//    public void discountHoliday();
+    int discount(int expectedVisitDate, Map<Menu, Integer> menuAndCount);
 }

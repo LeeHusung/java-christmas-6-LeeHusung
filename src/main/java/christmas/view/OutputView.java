@@ -1,11 +1,14 @@
 package christmas.view;
 
+import christmas.common.consts.EventConst;
 import christmas.discount.DiscountPolicy;
 import christmas.model.Menu;
 
 import java.util.Map;
 
-import static christmas.model.OrderConst.*;
+import static christmas.common.consts.EventConst.*;
+import static christmas.common.consts.OrderConst.*;
+import static christmas.model.Menu.*;
 
 public class OutputView {
 
@@ -36,14 +39,14 @@ public class OutputView {
         System.out.printf("%,d원", totalPriceBeforeDiscount);
         System.out.println();
 
-        if (totalPriceBeforeDiscount < 10000) throw new IllegalArgumentException("최소 주문 금액은 10000원 입니다");
+        if (totalPriceBeforeDiscount < LEAST_ORDER_PRICE) throw new IllegalArgumentException("최소 주문 금액은 10000원 입니다");
 
         int giftCount = getGiftCount(totalPriceBeforeDiscount);
 
         printGift(giftCount);
 
         while (giftCount > 0) {
-            Menu 샴페인 = Menu.valueOf("샴페인");
+            Menu 샴페인 = valueOf("샴페인");
             orderMap.put(샴페인, orderMap.getOrDefault(샴페인, 0) + 1);
             giftCount--;
         }
@@ -93,7 +96,7 @@ public class OutputView {
     }
 
     private static int printGiftEvent(int giftCount) {
-        int giftChampagneTotalMoney = 25000 * giftCount;
+        int giftChampagneTotalMoney = 샴페인.getPrice() * giftCount;
         if (giftCount > 0) {
             System.out.println("증정 이벤트: " + -giftChampagneTotalMoney);
         }
@@ -102,10 +105,10 @@ public class OutputView {
 
     public void printEventBadge(int totalDisCountPrice) {
         System.out.println("<12월 이벤트 배지>");
-        if (totalDisCountPrice >= 5000 && totalDisCountPrice < 10000) System.out.println("별");
-        if (totalDisCountPrice >= 10000 && totalDisCountPrice < 20000) System.out.println("트리");
-        if (totalDisCountPrice >= 20000) System.out.println("산타");
-        if (totalDisCountPrice < 5000) System.out.println("없음");
+        if (totalDisCountPrice >= STAR_LEAST_PRICE && totalDisCountPrice < STAR_HIGHEST_PRICE) System.out.println("별");
+        if (totalDisCountPrice >= TREE_LEAST_PRICE && totalDisCountPrice < TREE_HIGHEST_PRICE) System.out.println("트리");
+        if (totalDisCountPrice >= SANTA_LEAST_PRICE) System.out.println("산타");
+        if (totalDisCountPrice < NOTHING) System.out.println("없음");
     }
 
     public void printTotalPriceAfterDiscount(int totalPriceAfterDiscount) {

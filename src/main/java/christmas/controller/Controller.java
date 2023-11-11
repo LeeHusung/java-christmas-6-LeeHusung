@@ -16,10 +16,14 @@ public class Controller {
 
         System.out.println("12월 " + expectedVisitDate + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
         Map<Menu, Integer> readMenuAndCount = inputView.readMenuAndCount();
+
         OutputView outputView = new OutputView(new DiscountImpl());
         outputView.printMenu(readMenuAndCount);
+
         int totalPriceBeforeDiscount = outputView.printTotalPriceBeforeDiscount(readMenuAndCount);
+
         int giftCount = outputView.getGiftCount(totalPriceBeforeDiscount);
+
         outputView.printBenefits(expectedVisitDate, readMenuAndCount, totalPriceBeforeDiscount, giftCount);
     }
 }
