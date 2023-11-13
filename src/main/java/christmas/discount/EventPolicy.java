@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public interface DiscountPolicy {
+public interface EventPolicy {
 
     Set<Integer> weekdays = new HashSet<>();
     Set<Integer> weekends = new HashSet<>();

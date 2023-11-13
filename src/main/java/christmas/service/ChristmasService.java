@@ -1,6 +1,6 @@
 package christmas.service;
 
-import christmas.discount.DiscountPolicy;
+import christmas.discount.EventPolicy;
 import christmas.model.Menu;
 
 import java.util.Map;
@@ -10,13 +10,13 @@ import static christmas.model.Menu.valueOf;
 
 public class ChristmasService {
 
-    private final DiscountPolicy discountPolicy;
+    private final EventPolicy discountPolicy;
 
     public int discount(int expectedVisitDate, Map<Menu, Integer> orderMap) {
         return discountPolicy.discount(expectedVisitDate, orderMap);
     }
 
-    public ChristmasService(DiscountPolicy discountPolicy) {
+    public ChristmasService(EventPolicy discountPolicy) {
         this.discountPolicy = discountPolicy;
     }
 

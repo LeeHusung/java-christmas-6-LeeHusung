@@ -7,7 +7,7 @@ import java.util.Map;
 import static christmas.common.consts.DiscountConst.*;
 import static christmas.common.consts.DateConst.*;
 
-public class DiscountImpl implements DiscountPolicy {
+public class EventImpl implements EventPolicy {
 
     @Override
     public int discount(int expectedVisitDate, Map<Menu, Integer> menuAndCount) {

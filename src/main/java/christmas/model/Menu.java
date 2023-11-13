@@ -1,7 +1,5 @@
 package christmas.model;
 
-import christmas.common.consts.MenuConst;
-
 import static christmas.common.consts.MenuConst.*;
 
 public enum Menu {
@@ -44,6 +42,13 @@ public enum Menu {
 
     public int getPrice() {
         return price;
+    }
+
+    public static boolean contain(String inputMenuName) {
+        for (Menu menu : Menu.values()) {
+            if (menu.name().equals(inputMenuName)) return true;
+        }
+        return false;
     }
 }
 

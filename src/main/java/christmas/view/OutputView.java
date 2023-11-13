@@ -16,10 +16,7 @@ public class OutputView {
         System.out.println("12월 " + expectedVisitDate + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
         System.out.println();
         System.out.println(ORDER_MENU);
-        int count = 0;
         for (Menu menu : orderMap.keySet()) {
-            count += orderMap.get(menu);
-            if (count > ORDER_MAX_COUNT) throw new IllegalArgumentException("[ERROR] 메뉴는 총 20개 까지만 주문 가능합니다.");
             System.out.print(menu.name() + " " + orderMap.get(menu) + "개");
             System.out.println();
         }
