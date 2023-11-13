@@ -7,6 +7,7 @@ import java.util.Map;
 
 import static christmas.common.consts.OrderConst.GIVE_CHAMPAGNE_PRICE;
 import static christmas.model.Menu.valueOf;
+import static christmas.model.Menu.샴페인;
 
 public class ChristmasService {
 
@@ -21,19 +22,24 @@ public class ChristmasService {
     }
 
     public int getGiftCount(int totalPriceBeforeDiscount) {
-        int giftCount = 0;
-        while (totalPriceBeforeDiscount >= GIVE_CHAMPAGNE_PRICE) {
-            giftCount++;
-            totalPriceBeforeDiscount -= GIVE_CHAMPAGNE_PRICE;
-        }
-        return giftCount;
+        return totalPriceBeforeDiscount / GIVE_CHAMPAGNE_PRICE;
     }
 
     public void plusChampagneCountByGift(int giftCount, Map<Menu, Integer> orderMap) {
-        while (giftCount > 0) {
-            Menu 샴페인 = valueOf("샴페인");
-            orderMap.put(샴페인, orderMap.getOrDefault(샴페인, 0) + 1);
-            giftCount--;
+        Menu champagne = valueOf("샴페인");
+        orderMap.put(champagne, orderMap.getOrDefault(champagne, 0) + giftCount);
+    }
+
+    public int getTotalPriceBeforeDiscount(Map<Menu, Integer> orderMap) {
+        int totalPriceBeforeDiscount = 0;
+        for (Menu menu : orderMap.keySet()) {
+            int count = orderMap.get(menu);
+            totalPriceBeforeDiscount += menu.getPrice() * count;
         }
+        return totalPriceBeforeDiscount;
+    }
+
+    public int getGiftEventTotalMoney(int giftCount) {
+        return 샴페인.getPrice() * giftCount;
     }
 }

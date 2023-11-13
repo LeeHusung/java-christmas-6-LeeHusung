@@ -1,14 +1,11 @@
 package christmas.view;
 
-import christmas.common.consts.TitleConst;
 import christmas.model.Menu;
 
 import java.util.Map;
 
 import static christmas.common.consts.EventConst.*;
-import static christmas.common.consts.OrderConst.*;
 import static christmas.common.consts.TitleConst.*;
-import static christmas.model.Menu.*;
 
 public class OutputView {
 
@@ -23,7 +20,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public int printTotalPriceBeforeDiscount(Map<Menu, Integer> orderMap) {
+    public void printOrder(Map<Menu, Integer> orderMap, int expectedVisitDate, int giftCount) {
+        printMenu(orderMap, expectedVisitDate);
+        printTotalPriceBeforeDiscount(orderMap);
+        printGift(giftCount);
+    }
+    public void printTotalPriceBeforeDiscount(Map<Menu, Integer> orderMap) {
         System.out.println(TOTAL_PRICE_BEFORE_DISCOUNT);
         int totalPriceBeforeDiscount = 0;
         for (Menu menu : orderMap.keySet()) {
@@ -33,8 +35,10 @@ public class OutputView {
         System.out.printf(PRINT_MONEY, totalPriceBeforeDiscount);
         System.out.println();
         System.out.println();
+    }
 
-        return totalPriceBeforeDiscount;
+    public void printDiscountMessage(int totalDiscount) {
+        if (totalDiscount == 0) System.out.println("없음");
     }
 
     public void printGift(int giftCount) {
@@ -48,14 +52,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public int printGiftEvent(int giftCount) {
-        int giftChampagneTotalMoney = 샴페인.getPrice() * giftCount;
-        if (giftCount > 0) {
-            System.out.printf("증정 이벤트: " + PRINT_MONEY, -giftChampagneTotalMoney);
+    public void printGiftEvent(int giftEventTotalMoney) {
+        if (giftEventTotalMoney > 0) {
+            System.out.printf("증정 이벤트: " + PRINT_MONEY, -giftEventTotalMoney);
             System.out.println();
         }
         System.out.println();
-        return giftChampagneTotalMoney;
     }
 
     public void printEventBadge(int totalDisCountPrice) {
@@ -80,4 +82,11 @@ public class OutputView {
         System.out.println();
     }
 
+    public void printResultAfterDiscount(int totalDiscount, int totalPriceBeforeDiscount, int giftChampagneTotalMoney) {
+        printDiscountMessage(totalDiscount);
+        printGiftEvent(giftChampagneTotalMoney);
+        printTotalBenefitsPrice(totalDiscount + giftChampagneTotalMoney);
+        printTotalPriceAfterDiscount(totalPriceBeforeDiscount - totalDiscount);
+        printEventBadge(totalDiscount + giftChampagneTotalMoney);
+    }
 }

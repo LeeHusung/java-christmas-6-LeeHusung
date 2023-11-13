@@ -1,7 +1,6 @@
 package christmas.common.exception;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.common.consts.ErrorMessageConst;
 import christmas.model.Menu;
 
 import java.util.Map;
@@ -49,7 +48,6 @@ public class InputValidation {
     public static void validateInputOrderCountUnder1(int orderCount) {
         if (orderCount < 1) throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
-
 
     public static void validateExistMenu(String inputMenu) {
         if (!Menu.contain(inputMenu)) throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");

@@ -25,8 +25,8 @@ public class InputView {
         try {
             System.out.println("주문하실 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
             String input = Console.readLine();
-            Map<Menu, Integer> orderMap = parseMenuAndCount(input);
-
+            String[] menus = splitMenu(input);
+            Map<Menu, Integer> orderMap = inputOrder(menus);
             if (!validateDrinkOnly(orderMap)) {
                 return readMenuAndCount();
             }
@@ -38,28 +38,27 @@ public class InputView {
         }
     }
 
-    public static Map<Menu, Integer> parseMenuAndCount(String input) {
-        Map<Menu, Integer> orderMap = new HashMap<>();;
-        String[] split = input.split(",");
-        for (String s : split) {
+    private String[] splitMenu(String input) {
+        return input.split(",");
+    }
 
-            validateSplitMenuAndCount(s);
-            String[] real = s.split("-");
+    private Map<Menu, Integer> inputOrder(String[] menus) {
+        Map<Menu, Integer> orderMap = new HashMap<>();
+        for (String menu : menus) {
+            validateSplitMenuAndCount(menu);
+            String[] menuAndCount = menu.split("-");
 
-            validateExistMenu(real[0]);
-            validateDuplicateMenu(orderMap, real[0]);
-            Menu orderMenu = Menu.valueOf(real[0]);
+            validateExistMenu(menuAndCount[0]);
+            validateDuplicateMenu(orderMap, menuAndCount[0]);
+            Menu orderMenu = Menu.valueOf(menuAndCount[0]);
+
+            validateOrderCountNumberFormat(menuAndCount[1]);
+            validateInputOrderCountUnder1(Integer.parseInt(menuAndCount[1]));
+            validateInputOrderCountSumOver20(Integer.parseInt(menuAndCount[1]));
 
 
-            validateOrderCountNumberFormat(real[1]);
-            int orderCount = Integer.parseInt(real[1]);
-            validateInputOrderCountUnder1(orderCount);
-            validateInputOrderCountSumOver20(orderCount);
-
-
-            orderMap.put(orderMenu, orderCount);
+            orderMap.put(orderMenu, Integer.parseInt(menuAndCount[1]));
         }
         return orderMap;
     }
-
 }

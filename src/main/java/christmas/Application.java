@@ -1,6 +1,5 @@
 package christmas;
 
-import christmas.common.exception.InputValidation;
 import christmas.controller.ChristmasController;
 import christmas.discount.EventImpl;
 import christmas.service.ChristmasService;
@@ -9,7 +8,7 @@ import christmas.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        ChristmasController controller = new ChristmasController(new InputView(), new OutputView(), new ChristmasService(new EventImpl()), new InputValidation());
+        ChristmasController controller = new ChristmasController(new InputView(), new OutputView(), new ChristmasService(new EventImpl()));
         controller.takeOrder();
     }
 }
