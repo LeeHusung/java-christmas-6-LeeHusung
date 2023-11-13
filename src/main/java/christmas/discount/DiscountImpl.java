@@ -11,51 +11,71 @@ public class DiscountImpl implements DiscountPolicy {
 
     @Override
     public int discount(int expectedVisitDate, Map<Menu, Integer> menuAndCount) {
+        setWeekendsAndWeekdays();
 
-        for (int i = 1; i <= 31; i++) {
-            if (i % 7 == 1 || i % 7 == 2) weekends.add(i);
-            else weekdays.add(i);
-            if (i % 7 == 3) specialDays.add(i);
-        }
-        specialDays.add(CHRISTMAS_DAY);
-        //특별할인
         int sum = 0;
+        sum += discountChristmasDDay(expectedVisitDate);
+        sum += discountSpecialDay(expectedVisitDate);
+        sum += discountWeekdays(expectedVisitDate, menuAndCount);
+        sum += discountWeekends(expectedVisitDate, menuAndCount);
 
-        if (expectedVisitDate <= CHRISTMAS_DAY) {
-            int benefit = (expectedVisitDate - 1) * 100 + 1000;
-            sum += benefit;
-            System.out.printf("크리스마스 디데이 할인: %,d원", -benefit);
+        return sum;
+    }
+
+    private static int discountWeekdays(int expectedVisitDate, Map<Menu, Integer> menuAndCount) {
+        int discountWeekdays = 0;
+        for (Menu menu : menuAndCount.keySet()) {
+            if (weekdays.contains(expectedVisitDate) && menu.isDessert()) {
+                discountWeekdays += menuAndCount.get(menu) * WEEKDAY_DESSERT_DISCOUNT;
+            }
+        }
+        printDiscount("평일 할인", discountWeekdays);
+        return discountWeekdays;
+    }
+    private static int discountWeekends(int expectedVisitDate, Map<Menu, Integer> menuAndCount) {
+        int discountWeekends = 0;
+        for (Menu menu : menuAndCount.keySet()) {
+            if (weekends.contains(expectedVisitDate) && menu.isMain()) {
+                discountWeekends += menuAndCount.get(menu) * WEEKEND_MAIN_DISCOUNT;
+            }
+        }
+        printDiscount("주말 할인", discountWeekends);
+        return discountWeekends;
+    }
+
+    private static void printDiscount(String discountType, int discountDay) {
+        if (discountDay > 0) {
+            System.out.printf(discountType + ": %,d원", -discountDay);
             System.out.println();
         }
+    }
 
+    private static int discountSpecialDay(int expectedVisitDate) {
+        int specialDiscount = 0;
         if (specialDays.contains(expectedVisitDate)) {
             System.out.printf("특별 할인: %,d원", -SPECIAL_DISCOUNT);
             System.out.println();
-            sum += SPECIAL_DISCOUNT;
+            specialDiscount += SPECIAL_DISCOUNT;
         }
+        return specialDiscount;
+    }
 
-        int discountWeekday = 0;
-        int discountWeekend = 0;
-        for (Menu menu : menuAndCount.keySet()) {
-            if (weekends.contains(expectedVisitDate) && menu.isMain()) {
-                discountWeekend += menuAndCount.get(menu) * WEEKEND_MAIN_DISCOUNT;
-                sum += menuAndCount.get(menu) * WEEKEND_MAIN_DISCOUNT;
-            }
-
-            if (weekdays.contains(expectedVisitDate) && menu.isDessert()) {
-                discountWeekday += menuAndCount.get(menu) * WEEKDAY_DESSERT_DISCOUNT;
-                sum += menuAndCount.get(menu) * WEEKDAY_DESSERT_DISCOUNT;
-            }
-        }
-
-        if (discountWeekend > 0) {
-            System.out.printf("주말 할인: %,d원", -discountWeekend);
+    private static int discountChristmasDDay(int expectedVisitDate) {
+        int benefit = 0;
+        if (expectedVisitDate <= CHRISTMAS_DAY) {
+            benefit = (expectedVisitDate - 1) * 100 + 1000;
+            System.out.printf("크리스마스 디데이 할인: %,d원", -benefit);
             System.out.println();
         }
-        if (discountWeekday > 0) {
-            System.out.printf("평일 할인: %,d원", -discountWeekday);
-            System.out.println();
+        return benefit;
+    }
+
+    private static void setWeekendsAndWeekdays() {
+        for (int i = 1; i <= 31; i++) {
+            if (i % 7 == 1 || i % 7 == 2) weekends.add(i);
+            if (i % 7 == 3 || i % 7 == 4 || i % 7 == 5 || i % 7 == 6) weekdays.add(i);
+            if (i % 7 == 3) specialDays.add(i);
         }
-        return sum;
+        specialDays.add(CHRISTMAS_DAY);
     }
 }
