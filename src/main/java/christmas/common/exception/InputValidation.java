@@ -1,14 +1,12 @@
 package christmas.common.exception;
 
-import camp.nextstep.edu.missionutils.Console;
 import christmas.model.Menu;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import static christmas.common.consts.ErrorMessageConst.INVALID_ORDER_MESSAGE;
+import static christmas.common.consts.ErrorMessageConst.*;
 import static christmas.common.consts.OrderConst.*;
 
 public class InputValidation {
@@ -32,7 +30,6 @@ public class InputValidation {
         validateExistMenu(menuAndCount[0]);
         validateOrderCountNumberFormat(menuAndCount[1]);
         validateInputOrderCountUnder1(Integer.parseInt(menuAndCount[1]));
-        validateInputOrderCountSumOver20(Integer.parseInt(menuAndCount[1]));
     }
     public static void validateDuplicateMenu(List<String> menuList) {
         Set<String> menuSet = new HashSet<>(menuList);
@@ -50,7 +47,7 @@ public class InputValidation {
             }
         }
         if (isDrinkOnly) {
-            throw new IllegalArgumentException("[ERROR] 음료수만으로는 주문이 불가능합니다");
+            throw new IllegalArgumentException(NOT_ORDER_ONLY_DRINK);
         }
     }
 
@@ -63,9 +60,7 @@ public class InputValidation {
     }
 
     public static void validateInputOrderCountSumOver20(int orderCount) {
-        int sum = 0;
-        sum += orderCount;
-        if (sum > ORDER_MAX_COUNT) throw new IllegalArgumentException("[ERROR] 메뉴는 총 20개 까지만 주문 가능합니다.");
+        if (orderCount > ORDER_MAX_COUNT) throw new IllegalArgumentException(NEED_ORDER_SUM_UNDER_20);
     }
 
     public static void validateInputOrderCountUnder1(int orderCount) {

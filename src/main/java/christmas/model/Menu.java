@@ -33,7 +33,6 @@ public enum Menu {
         return false;
     }
 
-
     public boolean isMain() {
         return this.category.startsWith("MAIN");
     }
