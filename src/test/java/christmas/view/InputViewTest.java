@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class InputViewTest {
 
+    InputView inputView = new InputView();
     ChristmasService christmasService = new ChristmasService(new EventImpl());
 
     @Test
@@ -19,7 +20,7 @@ class InputViewTest {
         //given
         String input = "2";
         //when
-        int parseInput = parseInputDate(input);
+        int parseInput = readDate(input);
         //then
         assertThat(parseInput).isEqualTo(2);
     }
@@ -30,7 +31,7 @@ class InputViewTest {
         String input = "aa";
         //when
         //then
-        assertThatThrownBy(() -> parseInputDate(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> readDate(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -39,7 +40,7 @@ class InputViewTest {
         String input = "-2";
         //when
         //then
-        assertThatThrownBy(() -> parseInputDate(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> readDate(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -48,7 +49,7 @@ class InputViewTest {
         String input = "43";
         //when
         //then
-        assertThatThrownBy(() -> parseInputDate(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> readDate(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -56,7 +57,7 @@ class InputViewTest {
         //given
         String input = "티본스테이크-20";
         //when
-        Map<Menu, Integer> orderMap = christmasService.readMenu(input);
+        Map<Menu, Integer> orderMap = inputView.readMenu(input);
 
         //then
         assertThat(orderMap.size()).isEqualTo(1);
@@ -68,7 +69,7 @@ class InputViewTest {
         //given
         String input = "티본스테이크-10,아이스크림-5";
         //when
-        Map<Menu, Integer> orderMap = christmasService.readMenu(input);
+        Map<Menu, Integer> orderMap = inputView.readMenu(input);
         //then
         assertThat(orderMap.size()).isEqualTo(2);
         assertThat(orderMap.containsKey(Menu.티본스테이크)).isTrue();
@@ -82,7 +83,7 @@ class InputViewTest {
         //given
         String input = "티본스테이크-10,아이스크림-5,레드와인-1,타파스-2";
         //when
-        Map<Menu, Integer> orderMap = christmasService.readMenu(input);
+        Map<Menu, Integer> orderMap = inputView.readMenu(input);
 
         //then
         assertThat(orderMap.size()).isEqualTo(4);
@@ -102,7 +103,7 @@ class InputViewTest {
         String input = "티본스테이크20";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -111,7 +112,7 @@ class InputViewTest {
         String input = "티본스테이크 - 20";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -120,7 +121,7 @@ class InputViewTest {
         String input = "티본스테이크-10, 아이스크림-3";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -129,7 +130,7 @@ class InputViewTest {
         String input = "아이스크림-두개";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -138,7 +139,7 @@ class InputViewTest {
         String input = "";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
     @Test
     void 메뉴입력비정상테스트_개수1개미만() {
@@ -146,7 +147,7 @@ class InputViewTest {
         String input = "티본스테이크-0";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -155,7 +156,7 @@ class InputViewTest {
         String input = "레드와인-5";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -164,7 +165,7 @@ class InputViewTest {
         String input = "김치피자탕수육-5";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
     @Test
     void 메뉴입력비정상테스트_중복메뉴주문() {
@@ -172,7 +173,7 @@ class InputViewTest {
         String input = "티본스테이크-10,티본스테이크-10";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -181,7 +182,7 @@ class InputViewTest {
         String input = "아이스크림-1,티본스테이크-1,티본스테이크-5";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -190,7 +191,7 @@ class InputViewTest {
         String input = "티본스테이크-30";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -199,7 +200,7 @@ class InputViewTest {
         String input = "티본스테이크-10,아이스크림-10,타파스-10";
         //when
         //then
-        assertThatThrownBy(() -> christmasService.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> inputView.readMenu(input)).isInstanceOf(IllegalArgumentException.class);
     }
 
 }

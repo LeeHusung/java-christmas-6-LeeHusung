@@ -27,8 +27,7 @@ public class ChristmasController {
 
         int expectedVisitDate = inputView.inputDate();
 
-        String input = inputView.inputMenu();
-        Map<Menu, Integer> orderMap = christmasService.readMenu(input);
+        Map<Menu, Integer> orderMap = inputView.inputMenu();
 
         int totalPriceBeforeDiscount = christmasService.getTotalPriceBeforeDiscount(orderMap);
         int giftCount = christmasService.getGiftCount(totalPriceBeforeDiscount);
@@ -36,7 +35,7 @@ public class ChristmasController {
         outputView.printOrder(orderMap, expectedVisitDate, giftCount);
         christmasService.plusChampagneCountByGift(giftCount, orderMap);
 
-        int totalDiscount = christmasService.calculateDiscount(expectedVisitDate, orderMap);
+        int totalDiscount = christmasService.discount(expectedVisitDate, orderMap);
 
         int giftChampagneTotalMoney = christmasService.getGiftEventTotalMoney(giftCount);
 

@@ -12,5 +12,5 @@ public interface EventPolicy {
     Set<Integer> weekends = new HashSet<>();
     Set<Integer> specialDays = new HashSet<>();
 
-    int discount(int expectedVisitDate, Map<Menu, Integer> menuAndCount);
+    int discount(int expectedVisitDate, Map<Menu, Integer> menuAndCount, int totalPriceBeforeDiscount);
 }

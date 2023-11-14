@@ -10,7 +10,7 @@ import static christmas.common.consts.DateConst.*;
 public class EventImpl implements EventPolicy {
 
     @Override
-    public int discount(int expectedVisitDate, Map<Menu, Integer> menuAndCount) {
+    public int discount(int expectedVisitDate, Map<Menu, Integer> menuAndCount, int totalPriceBeforeDiscount) {
         setWeekendsAndWeekdays();
 
         int sum = 0;
@@ -22,35 +22,34 @@ public class EventImpl implements EventPolicy {
         return sum;
     }
 
-    private static int discountWeekdays(int expectedVisitDate, Map<Menu, Integer> menuAndCount) {
+    public int discountWeekdays(int expectedVisitDate, Map<Menu, Integer> orderMap) {
+        setWeekendsAndWeekdays();
+
         int discountWeekdays = 0;
-        for (Menu menu : menuAndCount.keySet()) {
+        for (Menu menu : orderMap.keySet()) {
             if (weekdays.contains(expectedVisitDate) && menu.isDessert()) {
-                discountWeekdays += menuAndCount.get(menu) * WEEKDAY_DESSERT_DISCOUNT;
+                discountWeekdays += orderMap.get(menu) * WEEKDAY_DESSERT_DISCOUNT;
             }
         }
         printDiscount("평일 할인", discountWeekdays);
         return discountWeekdays;
     }
-    private static int discountWeekends(int expectedVisitDate, Map<Menu, Integer> menuAndCount) {
+    public int discountWeekends(int expectedVisitDate, Map<Menu, Integer> orderMap) {
+        setWeekendsAndWeekdays();
+
         int discountWeekends = 0;
-        for (Menu menu : menuAndCount.keySet()) {
+        for (Menu menu : orderMap.keySet()) {
             if (weekends.contains(expectedVisitDate) && menu.isMain()) {
-                discountWeekends += menuAndCount.get(menu) * WEEKEND_MAIN_DISCOUNT;
+                discountWeekends += orderMap.get(menu) * WEEKEND_MAIN_DISCOUNT;
             }
         }
         printDiscount("주말 할인", discountWeekends);
         return discountWeekends;
     }
 
-    private static void printDiscount(String discountType, int discountDay) {
-        if (discountDay > 0) {
-            System.out.printf(discountType + ": %,d원", -discountDay);
-            System.out.println();
-        }
-    }
+    public int discountSpecialDay(int expectedVisitDate) {
+        setWeekendsAndWeekdays();
 
-    private static int discountSpecialDay(int expectedVisitDate) {
         int specialDiscount = 0;
         if (specialDays.contains(expectedVisitDate)) {
             System.out.printf("특별 할인: %,d원", -SPECIAL_DISCOUNT);
@@ -60,7 +59,9 @@ public class EventImpl implements EventPolicy {
         return specialDiscount;
     }
 
-    private static int discountChristmasDDay(int expectedVisitDate) {
+    public int discountChristmasDDay(int expectedVisitDate) {
+        setWeekendsAndWeekdays();
+
         int benefit = 0;
         if (expectedVisitDate <= CHRISTMAS_DAY) {
             benefit = (expectedVisitDate - 1) * 100 + 1000;
@@ -68,6 +69,13 @@ public class EventImpl implements EventPolicy {
             System.out.println();
         }
         return benefit;
+    }
+
+    public void printDiscount(String discountType, int discountDay) {
+        if (discountDay > 0) {
+            System.out.printf(discountType + ": %,d원", -discountDay);
+            System.out.println();
+        }
     }
 
     private static void setWeekendsAndWeekdays() {
