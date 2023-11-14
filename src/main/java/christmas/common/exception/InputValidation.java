@@ -10,21 +10,9 @@ import static christmas.common.consts.OrderConst.*;
 
 public class InputValidation {
 
-    public static int validateNumber() {
-        String input;
-        try {
-            input = Console.readLine();
-            if (!validateDate(Integer.parseInt(input))) throw new IllegalArgumentException(INPUT_DATE_ERROR);
-            return Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(INPUT_DATE_ERROR);
-        }
-    }
-
-    private static boolean validateDate(int expectedVisitDate) {
+    public static boolean validateDate(int expectedVisitDate) {
         return !(expectedVisitDate < 1 || expectedVisitDate > 31);
     }
-
 
     public static void validateDuplicateMenu(Map<Menu, Integer> orderMap, String inputMenu) {
         Menu menu = Menu.valueOf(inputMenu);

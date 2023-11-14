@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import camp.nextstep.edu.missionutils.Console;
 import christmas.model.Menu;
 import christmas.service.ChristmasService;
 import christmas.view.InputView;

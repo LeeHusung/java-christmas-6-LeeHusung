@@ -6,19 +6,31 @@ import christmas.model.Menu;
 import java.util.HashMap;
 import java.util.Map;
 
+import static christmas.common.consts.ErrorMessageConst.INPUT_DATE_ERROR;
 import static christmas.common.exception.InputValidation.*;
 
 public class InputView {
 
     public int readDate() {
-        int input = 0;
+        String input = Console.readLine();
+        int parseInput = 0;
         try {
-            input = validateNumber();
+            parseInput = parseInputDate(input);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readDate();
         }
-        return input;
+        return parseInput;
+    }
+
+    public static int parseInputDate(String input) {
+        try {
+            int parseInput = Integer.parseInt(input);
+            if (!validateDate(parseInput)) throw new IllegalArgumentException(INPUT_DATE_ERROR);
+            return parseInput;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(INPUT_DATE_ERROR);
+        }
     }
 
     public Map<Menu, Integer> readMenuAndCount() {
