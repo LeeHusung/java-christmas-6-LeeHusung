@@ -1,6 +1,5 @@
 package christmas.controller;
 
-import camp.nextstep.edu.missionutils.Console;
 import christmas.model.Menu;
 import christmas.service.ChristmasService;
 import christmas.view.InputView;
@@ -27,7 +26,8 @@ public class ChristmasController {
         greetCustomers();
         int expectedVisitDate = inputView.readDate();
 
-        Map<Menu, Integer> orderMap = inputView.readMenuAndCount();
+        String input = inputView.inputMenu();
+        Map<Menu, Integer> orderMap = inputView.readMenu(input);
 
         int totalPriceBeforeDiscount = christmasService.getTotalPriceBeforeDiscount(orderMap);
         int giftCount = christmasService.getGiftCount(totalPriceBeforeDiscount);

@@ -24,9 +24,15 @@ public enum Menu {
         this.price = price;
     }
 
-    public boolean isDrink() {
-        return this.category.startsWith("DRINK");
+    public static boolean isDrink(String inputMenu) {
+        for (Menu menu : Menu.values()) {
+            if (menu.name().equals(inputMenu) && menu.getCategory().equals(DRINK)) {
+                return true;
+            }
+        }
+        return false;
     }
+
 
     public boolean isMain() {
         return this.category.startsWith("MAIN");
