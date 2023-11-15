@@ -7,9 +7,6 @@ import christmas.view.OutputView;
 
 import java.util.Map;
 
-import static christmas.common.consts.EventConst.*;
-import static christmas.common.consts.TitleConst.*;
-
 public class ChristmasController {
 
     private final InputView inputView;

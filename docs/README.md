@@ -46,8 +46,8 @@
 
 
 ## 프로그래밍 요구사항
-- [ ] InputView, OutputView 클래스를 참고하여 입출력 클래스를 구현
-- [ ] Indent depth 3 미만
-- [ ] 3항 연산자 사용 X
-- [ ] 메서드의 길이 15줄 이내
-- [ ] else 사용 X
+- [x] InputView, OutputView 클래스를 참고하여 입출력 클래스를 구현
+- [x] Indent depth 3 미만
+- [x] 3항 연산자 사용 X
+- [x] 메서드의 길이 15줄 이내
+- [x] else 사용 X

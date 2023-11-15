@@ -32,6 +32,20 @@ class ApplicationTest extends NsTest {
             assertThat(output()).contains("<혜택 내역>" + LINE_SEPARATOR + "없음");
         });
     }
+    @Test
+    void 증정_메뉴_없음_출력() {
+        assertSimpleTest(() -> {
+            run("26", "타파스-1,제로콜라-1");
+            assertThat(output()).contains("<증정 메뉴>" + LINE_SEPARATOR + "없음");
+        });
+    }
+    @Test
+    void 이벤트_배지_없음_출력() {
+        assertSimpleTest(() -> {
+            run("26", "타파스-1,제로콜라-1");
+            assertThat(output()).contains("<12월 이벤트 배지>" + LINE_SEPARATOR + "없음");
+        });
+    }
 
     @Test
     void 날짜_예외_테스트() {

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
+import static christmas.discount.EventImpl.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DiscountTest {
@@ -132,6 +133,7 @@ public class DiscountTest {
 
     @Test
     void 특별할인2() {
+        setWeekendsAndWeekdays();
         //given
         int expectedVisitDate = 31;
         //when
